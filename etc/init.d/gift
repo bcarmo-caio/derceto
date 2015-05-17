@@ -28,6 +28,11 @@
 #https://www.debian-administration.org/article/212/An_introduction_to_run-levels
 #https://wiki.debian.org/RunLevel
 
+# NOTE !!!!!!!!
+# After copying this daemon to /etc/init.d/, do not forget to run:
+#          update-rc.d gift defaults
+# and check the number (nn) generated.
+
 # Define LSB log_* functions.
 # Depend on lsb-base (>= 3.2-14) to ensure that this file is present
 # and status_of_proc is working.
