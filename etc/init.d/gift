@@ -1,1 +1,74 @@
-/etc/init.d/gift
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          gift
+# Required-Start:    
+# Required-Stop:     
+# Default-Start:     1 2 3 4 5
+# Default-Stop:      0 6
+# Short-Description: Provides gif @upper-right corner
+# Description:       Provides gif @upper-right corner using fbv
+### END INIT INFO
+
+# Author: Caio BCarmo <caio.bedulli@gmail.com><github/bcarmo-caio>
+
+# * 0		System Halt
+# * 1		Single user
+# * 2		Full multi-user mode (Default)
+# * 3-5		Same as 2
+# * 6		System Reboot
+#
+# [K | S] + nn + [string]
+# Working backwards, here is how the name parses out. The [string] is a
+#  human readable mnemonic for the executable file that is actually
+#  symbolically linked to.
+#  The 'nn' is a two digit number from 01-99; lower number
+#  programs are executed first. By this method, services that have a
+#  dependancy can be certain their precursor has ran. The K and S signify
+#  simply Kill, or Start.
+#https://www.debian-administration.org/article/212/An_introduction_to_run-levels
+#https://wiki.debian.org/RunLevel
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+#. /lib/lsb/init-functions
+
+#DAEMON_PID=$(ps a | grep _gift.sh | grep -v grep | \
+#	sed -r "s|^[ |      ]*||" | sed -r "s|[ |	]+.*||")
+
+LOCK=/tmp/.gift-lock
+
+case "$1" in
+	start)
+		if  test -f $LOCK; then
+#		if  echo $DAEMON_PID | egrep -q [0-9]; then 
+			echo "Already running $DAEMON_PID"
+			exit 0
+		fi
+
+		touch $LOCK
+		/etc/init.d/_gift.sh &
+		exit 0
+	;;
+	stop)
+		if  ! test -f $LOCK; then
+#		if  echo $DAEMON_PID | egrep -q -v "."; then
+			echo "Gift not running"
+			exit 0
+		fi
+
+		echo "Stopping gift..."
+		killall _gift.sh && rm $LOCK
+		if  test $? -ne 0; then
+			echo "Could not kill $DAEMON_PID"
+			exit 1
+		fi
+		echo "No more gifts =/"
+	;;
+	*)
+		echo "Usage: gift {start|stop}"
+		exit 1
+	;;
+esac
+
+exit 0

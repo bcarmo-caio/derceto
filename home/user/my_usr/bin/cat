@@ -1,1 +1,21 @@
-/home/user/my_usr/bin/cat
+#!/bin/bash
+real_cat=$(whereis cat | awk -F" " '{print $2}')
+if [[ "$real_cat" == "" ]]; then
+	echo "Hey, man. We have no cat... Aborting NOW" > /dev/stderr
+	exit 1
+fi
+
+fail=0
+
+for i in "$@"; do
+	if  test -e "$i" && file "$i" | grep -q CRLF; then
+		echo "WARNING: '$i' file is in DOS format. Abort now or press RETURN" > /dev/stderr
+		fail=1
+	fi
+done
+
+if [[ $fail -gt 0 ]]; then
+	read -p "Abort now or press RETURN to continue." > /dev/stderr
+fi
+
+$real_cat "$@"
