@@ -1,9 +1,9 @@
 " ultima modificacao 14/05/2014 18:49
 
-" " faz o vim carregar tudo a partir da minha home e nao do
-" " /etc/share/vim/vimcurrent
-" " assim, podemos ficar compativel com o pc de casa
-" let $VIMRUNTIME = "/home/bcc/bedulli/.vim"
+" faz o vim carregar tudo a partir da minha home e nao do
+" /etc/share/vim/vimcurrent
+" assim, podemos ficar compativel com o pc de casa
+"let $VIMRUNTIME = "/home/bcc/bedulli/.vim"
 
 " habilita a colocaracao de sintaxe
 syntax enable
@@ -11,11 +11,30 @@ colorscheme elflord
 
 " minhas palavra a serem destacadas
 highlight PALAVRAS ctermbg=darkblue
-syntax keyword PALAVRAS asdasdasdasd
+syntax keyword PALAVRAS linux Nota nota
 
 " Destaca espaços e tabs redundantes
 highlight RedundantWhitespace ctermbg=gray guibg=gray
 match RedundantWhitespace /\s\+$\| \+\ze\t/
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+"          lets
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let _backupdir="~/.vim/backup//"
+let _swapdir="~/.vim/swap//"
+let _undodir="~/.vim/undo//"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+"          creating backup, swap, undo dirs
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+silent execute "!mkdir -p " _backupdir
+silent execute "!mkdir -p " _swapdir
+silent execute "!mkdir -p " _undodir
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -40,7 +59,11 @@ set ruler				" mostra a posicao do cursor
 set novisualbell		" vai piscar o cu da tua mae
 set noerrorbells		" XIU, quieto!
 set backup
-set backupdir=~/.vim/backup
+execute "set backupdir="._backupdir
+set swapfile
+execute "set directory="._swapdir
+set undofile
+execute "set undodir="._undodir
 "set nobackup			" nao grava o arquivo de backup
 set title				" mostra o nome do arquivo na barra de titulo
 "set textwidth=80		" quebra linha ao chegar na coluna 80
@@ -48,6 +71,7 @@ set undolevels=5000		" desfazer ateh 5000 acoes deve dar =p
 set updatetime=6000		" salva na swap apos 6 segundo sem fazer nada
 set updatecount=20		" salva na swap apos 20 caracteres
 set nocompatible		" sem compatibilidade com o VI
+"set colorcolumn=81
 
 "set expandtab
 
@@ -66,6 +90,17 @@ set laststatus=2
 "          fim sets
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+"          O M N I C O M P L E T E
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocp
+filetype plugin on
+
+map <F10> :!/home/bcc/bedulli/ctags_installed/bin/ctags -R .<cr>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 "
