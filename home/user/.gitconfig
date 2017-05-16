@@ -1,0 +1,43 @@
+[user]
+	name = 
+	email = 
+
+[merge]
+	tool = meld
+	prompt = false
+
+[diff]
+	guitool = meld
+	prompt = false
+
+[color]
+    ui = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = red
+
+[alias]
+	br = branch
+	blog = log --graph --oneline --decorate --all
+	st = status
+	co = checkout
+	vlog = !gitk
+	last = log -1 HEAD
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	fall = fetch -a -p
+[core]
+	pager = less -x1,5
+
